@@ -1,7 +1,17 @@
 // Entry point for your Sass build
+@import "mixins/media";
 
-br.bottomLine {
-  border-bottom-width: 1rem;
-  border-bottom-style: solid;
-  border-bottom-color: rgb(39, 37, 37);
-}
+// Configuration
+@import "config/variables";
+@import "config/reset";
+
+// Components
+@import "components/btn";
+@import "components/error_message";
+@import "components/form";
+@import "components/visually_hidden";
+@import "components/quote";
+
+// Layouts
+@import "layouts/container";
+@import "layouts/header";
