@@ -21,23 +21,19 @@ class QuotesController < ApplicationController
   def create
     @quote = Quote.new(quote_params)
 
-    respond_to do |format|
-      if @quote.save
-        format.html { redirect_to quote_url(@quote), notice: 'Quote was successfully created.' }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @quote.save
+      redirect_to quote_url(@quote), notice: 'Quote was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /quotes/1 or /quotes/1.json
   def update
-    respond_to do |format|
-      if @quote.update(quote_params)
-        format.html { redirect_to quote_url(@quote), notice: 'Quote was successfully updated.' }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if @quote.update(quote_params)
+      redirect_to quotes_path, notice: "Quote is successfully updated."
+    else
+      render :edit
     end
   end
 
@@ -45,8 +41,9 @@ class QuotesController < ApplicationController
   def destroy
     @quote.destroy
 
-    respond_to do |format|
-      format.html { redirect_to quotes_url, notice: 'Quote was successfully destroyed.' }
+  respond_to do |format|
+    format.html { redirect_to quotes_path, notice: "Quote was successfully destroyed." }
+    format.turbo_stream
     end
   end
 
