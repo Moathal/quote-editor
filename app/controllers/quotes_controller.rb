@@ -3,7 +3,7 @@ class QuotesController < ApplicationController
 
   # GET /quotes or /quotes.json
   def index
-    @quotes = Quote.all
+    @quotes = Quote.ordered
   end
 
   # GET /quotes/1 or /quotes/1.json
@@ -22,7 +22,10 @@ class QuotesController < ApplicationController
     @quote = Quote.new(quote_params)
 
     if @quote.save
-      redirect_to quote_url(@quote), notice: 'Quote was successfully created.'
+      respond_to do |format|
+        format.html { redirect_to quotes_path, notice: 'Quote was successfully created.' }
+        format.turbo_stream
+      end
     else
       render :new, status: :unprocessable_entity
     end
