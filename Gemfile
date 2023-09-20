@@ -70,6 +70,8 @@ end
 # simplify rails forms
 gem "simple_form", "~> 5.1.0"
 
+gem "devise"
+
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"

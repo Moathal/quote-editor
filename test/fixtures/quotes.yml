@@ -1,10 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 first:
-  quote: First quote
+  company: kpmg
+  name: First quote
 
 second:
-  quote: Second quote
+  company: kpmg
+  name: Second quote
 
 third:
-  quote: Third quote
+  company: kpmg
+  name: Third quote
