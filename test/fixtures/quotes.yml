@@ -2,12 +2,12 @@
 
 first:
   company: kpmg
-  name: First quote
+  quote: First quote
 
 second:
   company: kpmg
-  name: Second quote
+  quote: Second quote
 
 third:
   company: kpmg
-  name: Third quote
+  quote: Third quote
