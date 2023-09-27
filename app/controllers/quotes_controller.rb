@@ -3,7 +3,7 @@ class QuotesController < ApplicationController
 
   # GET /quotes or /quotes.json
   def index
-    @quotes = Quote.all
+    @quotes = current_company.quotes.ordered
   end
 
   # GET /quotes/1 or /quotes/1.json
@@ -19,25 +19,27 @@ class QuotesController < ApplicationController
 
   # POST /quotes or /quotes.json
   def create
-    @quote = Quote.new(quote_params)
+    @quote = current_company.quotes.build(quote_params)
 
-    respond_to do |format|
-      if @quote.save
-        format.html { redirect_to quote_url(@quote), notice: 'Quote was successfully created.' }
-      else
-        format.html { render :new, status: :unprocessable_entity }
+    if @quote.save
+      respond_to do |format|
+        format.html { redirect_to quotes_path, notice: 'Quote was successfully created.' }
+        format.turbo_stream { flash.now[:notice] = "Quote was successfully created." }
       end
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /quotes/1 or /quotes/1.json
   def update
-    respond_to do |format|
-      if @quote.update(quote_params)
-        format.html { redirect_to quote_url(@quote), notice: 'Quote was successfully updated.' }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
+    if @quote.update(quote_params)
+      respond_to do |format|
+        format.html { redirect_to quotes_path, notice: "Quote was successfully updated." }
+        format.turbo_stream { flash.now[:notice] = "Quote was successfully updated." }
       end
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -46,7 +48,8 @@ class QuotesController < ApplicationController
     @quote.destroy
 
     respond_to do |format|
-      format.html { redirect_to quotes_url, notice: 'Quote was successfully destroyed.' }
+      format.html { redirect_to quotes_path, notice: "Quote was successfully destroyed." }
+      format.turbo_stream { flash.now[:notice] = "Quote was successfully destroyed." }
     end
   end
 
@@ -54,7 +57,7 @@ class QuotesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_quote
-    @quote = Quote.find(params[:id])
+    @quote = current_company.quotes.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
